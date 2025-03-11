@@ -1,0 +1,71 @@
+@startuml AI_Agent_Architecture
+
+
+package "Autonomous AI Agent for Cloud Cost Optimization" {
+
+  class PlannerAgent {
+    + predictWorkloads(): void
+    + forecastUsingModel(modelType: String): Data
+  }
+
+  class OptimizerAgent {
+    + generateTemplates(inputData: Data): String
+    + optimizeDeploymentPlan(workloadForecast: Data): String
+  }
+
+  class ExecutorAgent {
+    + deployResources(template: String): void
+    + monitorPerformance(): Metrics
+    + actBasedOnMetrics(metrics: Metrics): void
+  }
+
+  class GenerativeAI {
+    + generateInfrastructureTemplate(): String
+    + explainDecision(reason: String): String
+  }
+
+  class ReinforcementLearningAgent {
+    + decideScalingAction(state: Metrics): Action
+    + trainModel(stateSpace: Data, actionSpace: Data): void
+  }
+
+  class HumanInLoop {
+    + validateAction(action: Action): Boolean
+    + overrideDecision(action: Action): void
+  }
+
+  class ScenarioSimulation {
+    + simulateWorkloads(): Metrics
+    + injectFaults(faultType: String): void
+  }
+  class MonitoringTools {
+    + trackResourceUsage(): Metrics
+    + logCostAnalysis(): void
+  }
+
+  class Visualization {
+    + displayRealTimeInsights(data: Metrics): void
+    + generateCostReports(): Report
+  }
+
+  PlannerAgent --> OptimizerAgent : "Generates Forecast"
+  OptimizerAgent --> ExecutorAgent : "Sends Optimized Plan"
+  ExecutorAgent --> MonitoringTools : "Fetches Metrics"
+  ExecutorAgent --> GenerativeAI : "Requests Template"
+  GenerativeAI --> OptimizerAgent : "Provides Template"
+  MonitoringTools --> Visualization : "Shares Data"
+  ReinforcementLearningAgent --> ExecutorAgent : "Suggests Scaling Action"
+  ScenarioSimulation --> MonitoringTools : "Injects Synthetic Metrics"
+  HumanInLoop --> ExecutorAgent : "Validates Deployment"
+  HumanInLoop --> OptimizerAgent : "Approves Template"
+
+}
+
+@enduml
+
+
+
+
+
+
+

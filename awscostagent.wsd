@@ -1,0 +1,25 @@
+@startuml AI_Agent_Architecture
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v18.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/MachineLearning/SageMaker.puml
+!include AWSPuml/Storage/SimpleStorageService.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/ApplicationIntegration/APIGateway.puml
+
+left to right direction
+
+APIGateway(api, "API Gateway", "Frontend Interaction")
+Lambda(processor, "Lambda Processor", "Business Logic")
+SageMaker(model, "SageMaker", "ML Model Inference")
+SimpleStorageService(storage, "S3", "Model Storage")
+DynamoDB(db, "DynamoDB", "Data Storage")
+
+api --> processor : User Request
+processor --> model : Invoke ML Model
+processor --> db : Fetch/Store Metadata
+model --> storage : Load Model Files
+db --> processor : Data Response
+
+@enduml

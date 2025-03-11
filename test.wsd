@@ -1,0 +1,19 @@
+@startuml "aws-architecture"
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle aws
+
+title AWS Architecture for Data Normalization
+
+package "AWS" {
+    component "S3 Bucket (Input)" as S3Input <<S3>> #FFCC00
+    component "Lambda Function\n(Data Normalization)" as Lambda <<Lambda>> #F79992
+    component "S3 Bucket (Output)" as S3Output <<S3>> #FFCC00
+    component "RDS Database\n(Normalized Data Table)" as RDS <<RDS>> #FF6600
+    component "CloudWatch Logs" as CloudWatch <<CloudWatch>> #99CCFF
+}
+
+S3Input -down-> Lambda : "S3 Event Notification"
+Lambda -down-> S3Output : "Normalized CSV"
+Lambda -right-> RDS : "Normalized Data Table"
+Lambda -left-> CloudWatch : "Logs & Metrics"
+@enduml

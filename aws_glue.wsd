@@ -1,0 +1,24 @@
+@startuml AWS Glue CSV Processing
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v18.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Storage/SimpleStorageService.puml
+!include AWSPuml/Analytics/Glue.puml
+!include AWSPuml/Compute/Lambda.puml
+
+left to right direction
+
+SimpleStorageService(inputBucket, "Input S3 Bucket", "Raw CSV Files")
+Glue(glueJob, "AWS Glue Job", "ETL Processing")
+SimpleStorageService(outputBucket, "Output S3 Bucket", "Processed Data")
+Lambda(notificationLambda, "Notification Service", "Send Alerts")
+
+inputBucket --> glueJob : "Trigger job on new file"
+glueJob --> outputBucket : "Store processed data"
+glueJob --> notificationLambda : "Notify completion"
+
+@enduml
+
+
+
+
